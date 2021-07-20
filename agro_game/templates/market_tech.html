@@ -1,0 +1,65 @@
+{% extends "layout_session.html" %}
+{% block title %}
+<div style="margin-right: 15px;" class="container">
+    <div class="row">Счет: {{actual.money}} Руб.</div>
+    <div class="row">Дата: {{actual.session_time}}</div>
+</div>
+<div class="navbar-nav mr-auto">
+    <a class="nav-item nav-link" href="{{ url_for('session_display', session_id = session.id) }}">К сессии</a>
+</div>
+{% endblock title %}
+{% block content %}
+<form method="POST" action="">
+    <table class="table" border="1">
+        <tr>
+            <th align="left" scope="col">Типы</th>
+            <th scope="col">Экземпляры</th>
+        </tr>
+        {% for tip in posts[0] %}
+        <tr>
+            <td>
+                {{ tip }}
+            </td>
+
+            <td>
+                <div style="container">
+                    <div class="row">
+                        {% for tech in posts[1] %}
+                        {% if tech[2] == tip %}
+                        <div class="col mt-2 mg-2">
+                            <div class="card" style="width: 22rem;">
+                                <center>
+                                    <div class="card-title mt-2"><b>{{ tech[1] }}</b></div>
+                                </center>
+                                <div class="card-body">
+                                    <a> Класс сцепления: {{ tech[3] }}</a> <br><br/>
+                                    <a> Вид машины: {{ tech[0] }}</a><br/>
+                                    <a> Цена: {{ tech[4] }} руб. </a><br/>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <div align="right" class="checkbox">
+
+                                            <input class="mt-2" type="checkbox" name="arend" value="{{ tech[1] }}"
+                                                   disabled> Арендовать
+                                        <label>
+                                            <input type="checkbox" name="buy" value="{{ tech[1] }}"> Купить
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div align="right">
+        <button class="btn btn-primary mb-5 mt-1" type="submit">
+            Сформировать чек
+        </button>
+</div>
+</form>
+{% endblock content %}

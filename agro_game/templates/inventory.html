@@ -1,0 +1,42 @@
+{% extends "layout_session.html" %}
+
+{% block title %}
+<div style="margin-right: 15px;" class="container">
+    <div class="row">Счет: {{actual.money}} Руб.</div>
+    <div class="row">Дата: {{actual.session_time}}</div>
+</div>
+<div class="navbar-nav mr-auto">
+    <a class="nav-item nav-link" href="{{ url_for('session_display', session_id = session.id) }}">К сессии</a>
+</div>
+{% endblock title %}
+
+{% block content %}
+<h3>Инвентарь</h3>
+<table class="table">
+    <tr>
+        <th scope="col">Техника</th>
+        <th scope="col">Персонал</th>
+        <th scope="col">Посевной материал</th>
+    </tr>
+
+    <tr>
+        <td>
+            {% for tech in techs.get('mark') %}
+                {{tech}}<br>
+            {% endfor %}
+        </td>
+
+        <td>
+            {% for worker in staff.get('specialization') %}
+                {{worker}}<br>
+            {% endfor %}
+        </td>
+
+        <td>
+            {% for seed in seeds.get('quality') %}
+                {{seed}}<br>
+            {% endfor %}
+        </td>
+    </tr>
+</table>
+{% endblock %}

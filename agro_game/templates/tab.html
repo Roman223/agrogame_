@@ -1,0 +1,70 @@
+{% extends "layout_session.html" %}
+
+{% block title %}
+ Счет: {{money.money}} Руб.
+<div class="navbar-nav mr-auto">
+    <a class="nav-item nav-link" href="{{ url_for('session_display', session_id = session.id) }}">К сессии</a>
+</div>
+{% endblock title %}
+
+{% block content %}
+<div class="content">
+    <h2 class="mt-2">Чек</h2>
+    <table class="table table-hover">
+        <tr>
+            <th scope="col">Номер</th>
+            <th scope="col">Марка</th>
+            <th scope="col">Тип</th>
+            <th scope="col">Класс сцепления</th>
+            <th scope="col">Вид</th>
+            <th scope="col">Цена</th>
+        </tr>
+
+        {% for machine in session.get('machines').items() %}
+            <tr>
+            {% for machine in machine[1].values() %}
+                <td>
+                {{ machine }}
+                </td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><p align="right">Итог:</p></td>
+            <td>{{ total }} руб.</td>
+        </tr>
+    </table>
+</div>
+<div align="right">
+    {% if money.money < total %}
+        <button class="btn btn-secondary" data-toggle="modal" data-target="#MoneyAssert">Оплатить</button>
+    {% else %}
+        <form action="" method="post">
+            <button class="btn btn-primary mb-5 mt-1" type="submit">
+            Оплатить
+            </button>
+        </form>
+    {% endif %}
+</div>
+
+<!-- Modal -->
+  <div class="modal fade" id="MoneyAssert" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Не хватает средств</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+            <a href="{{ url_for('market_tech')}}" class="btn btn-default">Вернуться в магазин</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

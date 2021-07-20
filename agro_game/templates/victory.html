@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+<div>
+    <h2>Вы победили!</h2>
+    <hr/>
+
+    <div class="content">
+    <h4 class="mt-2">Операции</h4>
+        <p>Целевая культура: {{ culture_name }}</p>
+    <table class="table table-hover">
+        <tr>
+            <th scope="col">Дата операции</th>
+            <th scope="col">Операция</th>
+            <th scope="col">Предыдущая продуктивность</th>
+            <th scope="col">Новая продуктивность</th>
+        </tr>
+        <tbody>
+        {% for operation in history %}
+            <tr>
+                {% for data in operation %}
+                <td>
+                    {{ data }}
+                </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    <div>
+        <a class="btn btn-secondary"
+           href="{{ url_for('session_menu') }}">Вернуть в меню сессий</a>
+    </div>
+</div>
+
+<script>
+    $('tbody').sortable();
+</script>
+{% endblock content %}

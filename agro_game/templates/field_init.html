@@ -1,0 +1,67 @@
+{% extends "layout_session.html" %}
+
+{% block title %}
+<div style="margin-right: 15px;" class="container" >
+    <div class="row">Счет: {{actual.money}} Руб.</div>
+    <div class="row">Дата: {{actual.session_time}}</div>
+</div>
+{% endblock title %}
+
+{% block content%}
+<h4 class="mt-4">Закупка поля</h4>
+<div style="width: 65%;" class="content-section">
+    <form action="" method="post">
+        {{ form.csrf_token }}
+        <fieldset>
+            <div class="form-group">
+                {{ form.target_culture.label(class="form-control-label") }}
+
+                {% if form.target_culture.errors%}
+                {{ form.target_culture(class="form-control form-control-lg is-invalid") }}
+                <div class="invalif-feedback">
+                    {% for error in form.target_culture.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.target_culture(class="form-control form-control-lg") }}
+                {% endif%}
+            </div>
+
+            <div class="form-group">
+                {{ form.purpose.label(class="form-control-label") }}
+
+                {% if form.purpose.errors%}
+                {{ form.purpose(class="form-control form-control-lg is-invalid") }}
+                <div class="invalif-feedback">
+                    {% for error in form.purpose.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.purpose(class="form-control form-control-lg") }}
+                {% endif%}
+            </div>
+
+            <div class="form-group">
+                {{ form.prev_culture.label(class="form-control-label") }}
+
+                {% if form.prev_culture.errors %}
+                {{ form.prev_culture(class="form-control form-control-lg is-invalid") }}
+                <div class="invalif-feedback">
+                    {% for error in form.prev_culture.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.prev_culture(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <small class="text-muted mt-4">Варианты будут сформированы, исходя из стартового капитала.</small>
+            <div align="right" class="form-group">
+                {{ form.submit(class="btn btn-secondary") }}
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock content %}

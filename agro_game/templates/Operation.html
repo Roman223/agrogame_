@@ -1,0 +1,119 @@
+{% extends "layout_session.html" %}
+
+{% block title %}
+<div style="margin-right: 15px;" class="container">
+    <div class="row">Счет: {{actual.money}} Руб.</div>
+    <div class="row">Дата: {{actual.session_time}}</div>
+</div>
+<div class="navbar-nav mr-auto">
+    <a class="nav-item nav-link" href="{{ url_for('session_display', session_id = session.id) }}">К сессии</a>
+</div>
+{% endblock title %}
+
+{% block content %}
+<form action="" method="post">
+    {{ o_form.hidden_tag() }}
+    <div class="content">
+        <h2 class="mt-2">Операции</h2>
+        <table class="table table-bordered">
+            <tr>
+                <th scope="col">Операция</th>
+                <th scope="col">Марка</th>
+                <th scope="col" colspan="2">Персонал</th>
+            </tr>
+            <tr>
+                <td>
+                    {{ o_form.operations(class="form-control form-control-lg") }}
+                </td>
+                <td>
+                    {{ o_form.machines(class="form-control form-control-lg") }}
+                </td>
+
+                <td>{{ o_form.staff(class="form-control form-control-lg") }}</td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <div align="right">
+        {{ o_form.submit(class="btn btn-outline-info") }}
+    </div>
+</form>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-success alert-dismissable fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="alert-heading">Как выбирать несколько вариантов</h2>
+                <p>Ctrl + Нажатие мышки, чтобы выбрать несколько позиций для операции.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+<!--<center>-->
+<!--    <div class="btn-group dropright">-->
+<!--        <button class="btn btn-secondary dropdown-toggle" type="button"-->
+<!--                data-toggle="dropdown">-->
+<!--            Операции-->
+<!--        </button>-->
+<!--        <div class="dropdown-menu">-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Междурядная обработка до восходов 1 и 2-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Опрыскивание от фитофтороза и гербицид-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Транспортировка картофеля-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Вспашка зяби-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Погрузка картофеля вручную-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Дробление и погрузка минеральных удобрений-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Внесение минеральных удобрений-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Копка картофеля-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Нарезка гребней-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Погрузка картофеля-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Посадка картофеля-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Окучивание-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Транспортировка минеральных удобрений-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Подбор картофеля вручную-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Транспортировка картофеля в хранилища-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Дискование-->
+<!--            </button>-->
+<!--            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#OperationalModal">-->
+<!--                Ранневесенее боронование-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</center>-->

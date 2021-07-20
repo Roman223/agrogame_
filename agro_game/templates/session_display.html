@@ -1,0 +1,176 @@
+{% extends "layout_session.html" %}
+{% block title %}
+<div style="margin-right: 15px;" class="container">
+    <div class="row">Счет: {{actual.money}} Руб.</div>
+    <div class="row">Дата: {{actual.session_time}}</div>
+</div>
+<div class="navbar-nav mr-auto">
+    <a class="nav-item nav-link" href="{{ url_for('session_display', session_id = session.id) }}">К сессии</a>
+</div>
+{% endblock title %}
+
+{% block content %}
+<table align="center" height="100%" width="100%" cellspacing="0">
+
+    <tr>
+        <td align="left">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    Закупка
+                </button>
+                <!-- Menu -->
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ url_for('market_tech') }}">Техника</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#SeedsModal">Посевной
+                        материал</a>
+                    <a class="dropdown-item" href="#">Топливо</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#FertModal">Удобрения</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Другое</a>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary mt-1 mb-1" data-toggle="modal" data-target="#Staff">
+                Наем персонала
+            </button>
+            <a class="btn btn-info mt-1 mb-1" href="{{ url_for('inventory') }}" role="button">
+                Инвентарь
+            </a>
+        </td>
+    </tr>
+
+    {% for field in fields_list %}
+    <tr>
+        <td align="left">
+            <div class="media content-section">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <a class="mr-2">Поле {{ field.id }}</a>
+                        <small class="text-muted">Площадь: {{ field.area }} га |</small>
+                        <small class="text-muted">Температура воздуха: {{ field.temp_air }} |</small>
+                        <small class="text-muted">Относительная влажность: {{ field.humidity }} % |</small>
+                        <small class="text-muted">Stage: {{ stage }}</small>
+                    </div>
+                    <h2><a class="article-title">Показатели поля</a></h2>
+                    <p class="article-content">
+                        pH: {{ field.pH }}
+                        Температура почвы: {{ field.temp_soil }}
+                        Влагозапас: {{ field.watercapacity | rnd }} мм
+                        N: {{ field.N }} мг/кг
+                        P: {{ field.P }} мг/кг
+                        K: {{ field.K }} мг/кг
+                        Урожайность: {{ field.productivity | rnd }} %
+                    </p>
+                    <fieldset align="right">
+                        <div>
+                            <small class="text-muted"> Какие-то кнопки </small>
+                            <button type="button" class="btn btn-primary m-1" data-toggle="modal"
+                                    data-target="#deleteModal" disabled>Продать
+                            </button>
+                            <a class="btn btn-secondary mt-1 mb-1"
+                               href="#">Кнопка</a>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </td>
+        <td colspan="2">
+            <center>
+                <a class="btn btn-secondary" href="{{ url_for('operation') }}">
+                    Операции
+                </a>
+            </center>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div align="right">
+    <div class="btn-group">
+        <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Ждать
+        </button>
+        <!-- Menu -->
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="{{ url_for('sleep', timecode=0) }}">1 день</a>
+            <a class="dropdown-item" href="{{ url_for('sleep', timecode=1) }}">2 дня</a>
+            <a class="dropdown-item" href="{{ url_for('sleep', timecode=2) }}">3 дня</a>
+            <a class="dropdown-item" href="{{ url_for('sleep', timecode=3) }}">5 дней</a>
+            <a class="dropdown-item" href="{{ url_for('sleep', timecode=4) }}">7 дней</a>
+            <a class="dropdown-item" href="{{ url_for('sleep', timecode=5) }}">14 дней</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Staff -->
+<div id="Staff" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+
+        <!-- Modal Content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Персонал</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    {{ s_form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <div class="form-group">
+                            {{ s_form.qualification.label(class="form-control-label") }}
+                            {{ s_form.qualification(class="form-control form-control-lg") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ s_form.specialization.label(class="form-control-label") }}
+                            {{ s_form.specialization(class="form-control form-control-lg") }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            {{ s_form.submit(class="btn btn-outline-info")}}
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--TODO: переделать крестики, сделать пошире модалку-->
+
+<!-- Modal Staff -->
+<div id="SeedsModal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+
+        <!-- Modal Content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Покупка посевного материала</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    {{ seeds_form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <div class="form-group">
+                            {{ seeds_form.quality.label(class="form-control-label") }}
+                            {{ seeds_form.quality(class="form-control form-control-lg") }}
+                        </div>
+                        <div class="container">
+                            <h6>Цены</h6>
+                            {% for name, price in seeds_form.prices.items() %}
+                            <p>{{ name }} : {{ price }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            {{ seeds_form.submit(class="btn btn-outline-info")}}
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

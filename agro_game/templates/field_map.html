@@ -1,0 +1,59 @@
+{% extends "layout_session.html" %}
+
+{% block title %}
+<div style="margin-right: 15px;" class="container" >
+    <div class="row">Счет: {{actual.money}} Руб.</div>
+    <div class="row">Дата: {{actual.session_time}}</div>
+</div>
+{% endblock title %}
+
+{% block content%}
+<h4 class="mt-4">Закупка поля</h4>
+<div style="width: 65%;" class="container">
+    <div class="row">
+        <div style="container">
+            <div class="mt-2 row">
+                {% for field in options.items() %}
+                <form action="" method="post">
+                    <div class="col mg-2">
+                        <div class="row card" style="width: 23rem;">
+                            <center>
+                                <div class="card-title mt-2">Поле {{ field[0] }}</div>
+                            </center>
+                            <div class="card-body">
+                                <a> Площадь: {{ field[1]['area'] }} га</a> <br/>
+                                <a> pH: {{ field[1]['pH'] }}</a><br/>
+                                <a> N: {{ field[1]['N'] }} мг/кг </a><br/>
+                                <a> P: {{ field[1]['P'] }} мг/кг</a><br/>
+                                <a> K: {{ field[1]['K'] }} мг/кг</a><br/>
+                                <a> Гумус: {{ field[1]['humus'] }} </a><br/>
+                                <a> Гранулометрический состав: {{ field[1]['gran_sostav'] }} </a><br/>
+                                <b> Цена: {{ field[1]['price'] }} Руб. </b><br/>
+<!--todo: not all values-->
+                            </div>
+                            <div align="right" class="card-footer">
+                                <button name="result"
+                                        value='{"area": {{ field[1]["area"] }},
+                                        "temperature_air": {{ field[1]["temperature_air"] }},
+                                        "temperature_soil": {{ field[1]["temperature_soil"] }},
+                                        "pH": {{ field[1]["pH"] }},
+                                        "price": {{ field[1]["price"] }},
+                                        "humidity": {{ field[1]["humidity"] }},
+                                        "watercapacity": {{ field[1]["watercapacity"] }},
+                                        "N": {{ field[1]["N"] }},
+                                        "P": {{ field[1]["P"] }},
+                                        "K": {{ field[1]["K"] }}}'
+                                        class="btn btn-primary" type="submit">
+                                    Купить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}

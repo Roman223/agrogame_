@@ -306,7 +306,7 @@ def sleep(timecode):
     #     f"SELECT * FROM users_fields WHERE user_id={current_user.get_id()} and session_id = {session.get('id')};").fetchone()
     push_package(db=db,
                  table='users_fields',
-                 field_id=session.get('id'),
+                 id=session.get('id'),
 
                  temp_air=get_temp_by_day(average=get_temp(db=db,
                                                            date=time_after_refresh)),
